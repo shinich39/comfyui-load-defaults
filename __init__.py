@@ -31,12 +31,12 @@ async def load(request):
 
     # Read data
     if os.path.exists(DATA_PATH) == False:
-      # print(f"> latest.json not found")
+      # print(f"[comfyui-load-defaults] latest.json not found")
       with open(DATA_PATH, "w") as f:
         f.write(json.dumps(data, indent=2))
         f.close()
     else:
-      # print(f"> Read previous latest.json ")
+      # print(f"[comfyui-load-defaults] Read previous latest.json ")
       with open(DATA_PATH, "r") as file:
         data = json.load(file)
 
@@ -45,7 +45,7 @@ async def load(request):
     if "updatedAt" in data:
       prev_time = data["updatedAt"]
 
-    # print(f"> {prev_time}")
+    # print(f"[comfyui-load-defaults] {prev_time}")
 
     # Download data
     try:
@@ -53,13 +53,13 @@ async def load(request):
       info_data = json.loads(info_res.text)
       next_time = info_data["updatedAt"]
       if prev_time == None or prev_time != next_time:
-        print(f"> civitai-metadata-json updated. {prev_time} != {next_time}")
+        print(f"[comfyui-load-defaults] civitai-metadata-json updated. {prev_time} != {next_time}")
 
         # Update
         next_res = requests.get(DATA_URL)
         next_data = json.loads(next_res .text)
         
-        # print(f"> {next_data}")
+        # print(f"[comfyui-load-defaults] {next_data}")
         
         with open(DATA_PATH, "w+") as f:
           f.write(json.dumps(next_data))
@@ -67,7 +67,7 @@ async def load(request):
 
         data = next_data
       else:
-        # print(f"> civitai-metadata-json not updated yet")
+        # print(f"[comfyui-load-defaults] civitai-metadata-json not updated yet")
         pass
     except Exception:
       print(f"Failed to connect to {INFO_URL}")

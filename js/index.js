@@ -5,12 +5,13 @@ import { api } from "../../scripts/api.js";
 
 const NODE_TYPE = "LoadDefaults";
 const KEYS = [
-  ["w", "Width: "],
-  ["h", "Height: "],
+  // ["w", "Width: "],
+  // ["h", "Height: "],
   ["seed", "Seed: "],
   ["steps", "Steps: "],
   ["cfg", "CFG scale: "],
   ["sampler", "Sampler: "],
+  ["scheduler", "Scheduler: "],
   ["strength", "Denoising strength: "],
   ["pp", "\nPositive prompt:\n"],
   ["np", "\nNegative prompt:\n"],
@@ -113,6 +114,11 @@ app.registerExtension({
                         str += `Version: ${data.versionName}\n`;
                         str += `Updated: ${new Date(data.updatedAt).toISOString().split('T')[0]}\n\n`;
 
+                        str += `URL: https://civitai.com/models/${data.modelId}?modelVersionId=${data.versionId}\n\n`;
+
+                        if (d.w && d.h) {
+                          str += `Size: ${d.w} x ${d.h}\n`;
+                        }
                         for (const [key, label] of KEYS) {
                           if (d[key]) {
                             str += `${label}${d[key]}\n`;
