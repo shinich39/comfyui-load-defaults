@@ -117,7 +117,7 @@ app.registerExtension({
                         str += `URL: https://civitai.com/models/${data.modelId}?modelVersionId=${data.versionId}\n\n`;
 
                         if (d.w && d.h) {
-                          str += `Size: ${d.w} x ${d.h}\n`;
+                          str += `Size: ${d.w}x${d.h}\n`;
                         }
                         for (const [key, label] of KEYS) {
                           if (d[key]) {
